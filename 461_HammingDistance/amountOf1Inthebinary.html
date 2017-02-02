@@ -1,0 +1,336 @@
+<html>
+ <head></head>
+ <body>
+  <div class="post cye-lm-tag">
+   <h2> <a id="cb_post_title_url" href="http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html">算法-求二进制数中1的个数</a> </h2>
+   <a id="cb_post_title_url" href="http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html">原文链接</a>
+   <div class="postbody cye-lm-tag">
+    <div id="cnblogs_post_body" class="cye-lm-tag">
+     <h1>问题描述</h1>
+     <p class="cye-lm-tag">任意给定一个32位无符号整数n，求n的二进制表示中1的个数，比如n = 5（0101）时，返回2，n = 15（1111）时，返回4</p>
+     <p class="cye-lm-tag">这也是一道比较经典的题目了，相信不少人面试的时候可能遇到过这道题吧，下面介绍了几种方法来实现这道题，相信很多人可能见过下面的算法，但我相信很少有人见到本文中所有的算法。如果您上头上有更好的算法，或者本文没有提到的算法，请不要吝惜您的代码，分享的时候，也是学习和交流的时候。</p>
+     <h1>普通法</h1>
+     <p class="cye-lm-tag">我总是习惯叫普通法，因为我实在找不到一个合适的名字来描述它，其实就是最简单的方法，有点程序基础的人都能想得到，那就是移位+计数，很简单，不多说了，直接上代码，这种方法的运算次数与输入n最高位1的位置有关，最多循环32次。</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> c =<span style="color: #800080;" class="cye-lm-tag">0</span> ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 计数器</span>
+        <span style="color: #0000ff;" class="cye-lm-tag">while</span> (n &gt;<span style="color: #800080;" class="cye-lm-tag">0</span><span style="color: #000000;" class="cye-lm-tag">)
+        {
+            </span><span style="color: #0000ff;" class="cye-lm-tag">if</span>((n &amp;<span style="color: #800080;" class="cye-lm-tag">1</span>) ==<span style="color: #800080;" class="cye-lm-tag">1</span>) <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 当前位是1</span>
+                ++c ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 计数器加1</span>
+                n &gt;&gt;=<span style="color: #800080;" class="cye-lm-tag">1</span> ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 移位</span>
+                <span style="color: #000000;" class="cye-lm-tag">    }
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> c ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">一个更精简的版本如下</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount1(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> c =<span style="color: #800080;" class="cye-lm-tag">0</span> ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 计数器</span>
+        <span style="color: #0000ff;" class="cye-lm-tag">for</span> (c =<span style="color: #800080;" class="cye-lm-tag">0</span>; n; n &gt;&gt;=<span style="color: #800080;" class="cye-lm-tag">1</span>) <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 循环移位</span>
+        c += n &amp;<span style="color: #800080;" class="cye-lm-tag">1</span> ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 如果当前位是1，则计数器加1</span>
+        <span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> c ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <h1>&nbsp;快速法</h1>
+     <p class="cye-lm-tag">这种方法速度比较快，其运算次数与输入n的大小无关，只与n中1的个数有关。如果n的二进制表示中有k个1，那么这个方法只需要循环k次即可。其原理是不断清除n的二进制表示中最右边的1，同时累加计数器，直至n为0，代码如下</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount2(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> c =<span style="color: #800080;" class="cye-lm-tag">0</span><span style="color: #000000;" class="cye-lm-tag"> ;
+    </span><span style="color: #0000ff;" class="cye-lm-tag">for</span> (c =<span style="color: #800080;" class="cye-lm-tag">0</span>; n; ++<span style="color: #000000;" class="cye-lm-tag">c)
+    {
+        n </span>&amp;= (n -<span style="color: #800080;" class="cye-lm-tag">1</span>) ; <span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 清除最低位的1</span>
+            <span style="color: #000000;" class="cye-lm-tag">    }
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> c ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">为什么n &amp;= (n – 1)能清除最右边的1呢？因为从二进制的角度讲，n相当于在n - 1的最低位加上1。举个例子，8（1000）= 7（0111）+ 1（0001），所以8 &amp; 7 = （1000）&amp;（0111）= 0（0000），清除了8最右边的1（其实就是最高位的1，因为8的二进制中只有一个1）。再比如7（0111）= 6（0110）+ 1（0001），所以7 &amp; 6 = （0111）&amp;（0110）= 6（0110），清除了7的二进制表示中最右边的1（也就是最低位的1）。</p>
+     <h1>查表法</h1>
+     <h2>动态建表</h2>
+     <p class="cye-lm-tag">由于表示在程序运行时动态创建的，所以速度上肯定会慢一些，把这个版本放在这里，有两个原因</p>
+     <p class="cye-lm-tag">1. 介绍填表的方法，因为这个方法的确很巧妙。</p>
+     <p class="cye-lm-tag">2. 类型转换，这里不能使用传统的强制转换，而是先取地址再转换成对应的指针类型。也是常用的类型转换方法。</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount3(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    </span><span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 建表</span>
+        unsigned <span style="color: #0000ff;" class="cye-lm-tag">char</span> BitsSetTable256[<span style="color: #800080;" class="cye-lm-tag">256</span>] = {<span style="color: #800080;" class="cye-lm-tag">0</span><span style="color: #000000;" class="cye-lm-tag">} ;
+
+    </span><span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 初始化表 </span>
+        <span style="color: #0000ff;" class="cye-lm-tag">for</span> (<span style="color: #0000ff;" class="cye-lm-tag">int</span> i =<span style="color: #800080;" class="cye-lm-tag">0</span>; i &lt;<span style="color: #800080;" class="cye-lm-tag">256</span>; i++<span style="color: #000000;" class="cye-lm-tag">)
+        {
+            BitsSetTable256[i] </span>= (i &amp;<span style="color: #800080;" class="cye-lm-tag">1</span>) + BitsSetTable256[i /<span style="color: #800080;" class="cye-lm-tag">2</span><span style="color: #000000;" class="cye-lm-tag">];
+        }
+
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> c =<span style="color: #800080;" class="cye-lm-tag">0</span><span style="color: #000000;" class="cye-lm-tag"> ;
+
+    </span><span style="color: #008000;" class="cye-lm-tag">//</span><span style="color: #008000;" class="cye-lm-tag"> 查表</span>
+        unsigned <span style="color: #0000ff;" class="cye-lm-tag">char</span>* p = (unsigned <span style="color: #0000ff;" class="cye-lm-tag">char</span>*) &amp;<span style="color: #000000;" class="cye-lm-tag">n ;
+
+    c </span>= BitsSetTable256[p[<span style="color: #800080;" class="cye-lm-tag">0</span>]] +<span style="color: #000000;" class="cye-lm-tag">
+        BitsSetTable256[p[</span><span style="color: #800080;" class="cye-lm-tag">1</span>]] +<span style="color: #000000;" class="cye-lm-tag">
+        BitsSetTable256[p[</span><span style="color: #800080;" class="cye-lm-tag">2</span>]] +<span style="color: #000000;" class="cye-lm-tag">
+        BitsSetTable256[p[</span><span style="color: #800080;" class="cye-lm-tag">3</span><span style="color: #000000;" class="cye-lm-tag">]];
+
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> c ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">先说一下填表的原理，根据奇偶性来分析，对于任意一个正整数n</p>
+     <p class="cye-lm-tag">1.如果它是偶数，那么n的二进制中1的个数与n/2中1的个数是相同的，比如4和2的二进制中都有一个1，6和3的二进制中都有两个1。为啥？因为n是由n/2左移一位而来，而移位并不会增加1的个数。</p>
+     <p class="cye-lm-tag">2.如果n是奇数，那么n的二进制中1的个数是n/2中1的个数+1，比如7的二进制中有三个1，7/2 = 3的二进制中有两个1。为啥？因为当n是奇数时，n相当于n/2左移一位再加1。</p>
+     <p class="cye-lm-tag">再说一下查表的原理</p>
+     <p class="cye-lm-tag">对于任意一个32位无符号整数，将其分割为4部分，每部分8bit，对于这四个部分分别求出1的个数，再累加起来即可。而8bit对应2^8 = 256种01组合方式，这也是为什么表的大小为256的原因。</p>
+     <p class="cye-lm-tag">注意类型转换的时候，先取到n的地址，然后转换为unsigned char*，这样一个unsigned int（4 bytes）对应四个unsigned char（1 bytes），分别取出来计算即可。举个例子吧，以87654321（十六进制）为例，先写成二进制形式-8bit一组，共四组，以不同颜色区分，这四组中1的个数分别为4，4，3，2，所以一共是13个1，如下面所示。</p>
+     <p class="cye-lm-tag"><span style="color: #ff0000;" class="cye-lm-tag">10000111</span> <span style="color: #008000;" class="cye-lm-tag">01100101</span> <span style="color: #0000ff;" class="cye-lm-tag">01000011</span> <span style="color: #400000;" class="cye-lm-tag">00100001</span> = 4 + 4 + 3 + 2 = 13</p>
+     <h2>静态表-4bit</h2>
+     <p class="cye-lm-tag">原理和8-bit表相同，详见8-bit表的解释</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount4(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> table[<span style="color: #800080;" class="cye-lm-tag">16</span>] =<span style="color: #000000;" class="cye-lm-tag">
+    {
+        </span><span style="color: #800080;" class="cye-lm-tag">0</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span><span style="color: #000000;" class="cye-lm-tag">
+    } ;
+
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> count =<span style="color: #800080;" class="cye-lm-tag">0</span><span style="color: #000000;" class="cye-lm-tag"> ;
+    </span><span style="color: #0000ff;" class="cye-lm-tag">while</span><span style="color: #000000;" class="cye-lm-tag"> (n)
+    {
+        count </span>+= table[n &amp;<span style="color: #800080;" class="cye-lm-tag">0xf</span><span style="color: #000000;" class="cye-lm-tag">] ;
+        n </span>&gt;&gt;=<span style="color: #800080;" class="cye-lm-tag">4</span><span style="color: #000000;" class="cye-lm-tag"> ;
+    }
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> count ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <h2>静态表-8bit</h2>
+     <p class="cye-lm-tag">首先构造一个包含256个元素的表table，table[i]即i中1的个数，这里的i是[0-255]之间任意一个值。然后对于任意一个32bit无符号整数n，我们将其拆分成四个8bit，然后分别求出每个8bit中1的个数，再累加求和即可，这里用移位的方法，每次右移8位，并与0xff相与，取得最低位的8bit，累加后继续移位，如此往复，直到n为0。所以对于任意一个32位整数，需要查表4次。以十进制数2882400018为例，其对应的二进制数为10101011110011011110111100010010，对应的四次查表过程如下：红色表示当前8bit，绿色表示右移后高位补零。</p>
+     <p class="cye-lm-tag">第一次（<span style="color: #000000;" class="cye-lm-tag">n &amp; 0xff）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>101010111100110111101111<span style="color: #ff0000;" class="cye-lm-tag">00010010 </span></p>
+     <p class="cye-lm-tag"><span style="color: #000000;" class="cye-lm-tag">第二次（<span style="color: #000000;" class="cye-lm-tag">(n &gt;&gt; 8) &amp; 0xff</span>）&nbsp; <span style="color: #008000;" class="cye-lm-tag">00000000</span>1010101111001101<span style="color: #ff0000;" class="cye-lm-tag">11101111</span></span></p>
+     <p class="cye-lm-tag"><span style="color: #000000;" class="cye-lm-tag">第三次（<span style="color: #000000;" class="cye-lm-tag">(n &gt;&gt; 16) &amp; 0xff</span>）<span style="color: #008000;" class="cye-lm-tag">0000000000000000</span>10101011<span style="color: #ff0000;" class="cye-lm-tag">11001101</span></span></p>
+     <p class="cye-lm-tag"><span style="color: #000000;" class="cye-lm-tag">第四次（<span style="color: #000000;" class="cye-lm-tag">(n &gt;&gt; 24) &amp; 0xff</span>）<span style="color: #008000;" class="cye-lm-tag">000000000000000000000000</span><span style="color: #ff0000;" class="cye-lm-tag">10101011</span></span></p>
+     <p class="cye-lm-tag">&nbsp;</p>
+     <div class="cnblogs_code cye-lm-tag">
+      <div class="cnblogs_code_toolbar cye-lm-tag">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre class="cye-lm-tag"><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount7(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    unsigned </span><span style="color: #0000ff;" class="cye-lm-tag">int</span> table[<span style="color: #800080;" class="cye-lm-tag">256</span>] =<span style="color: #000000;" class="cye-lm-tag">
+    {
+        </span><span style="color: #800080;" class="cye-lm-tag">0</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">1</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">2</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">3</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span><span style="color: #000000;" class="cye-lm-tag">,
+            </span><span style="color: #800080;" class="cye-lm-tag">4</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span>, <span style="color: #800080;" class="cye-lm-tag">5</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span>, <span style="color: #800080;" class="cye-lm-tag">6</span>, <span style="color: #800080;" class="cye-lm-tag">7</span>, <span style="color: #800080;" class="cye-lm-tag">7</span>, <span style="color: #800080;" class="cye-lm-tag">8</span><span style="color: #000000;" class="cye-lm-tag">,
+    };
+
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span> table[n &amp;<span style="color: #800080;" class="cye-lm-tag">0xff</span>] +<span style="color: #000000;" class="cye-lm-tag">
+        table[(n </span>&gt;&gt;<span style="color: #800080;" class="cye-lm-tag">8</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0xff</span>] +<span style="color: #000000;" class="cye-lm-tag">
+        table[(n </span>&gt;&gt;<span style="color: #800080;" class="cye-lm-tag">16</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0xff</span>] +<span style="color: #000000;" class="cye-lm-tag">
+        table[(n </span>&gt;&gt;<span style="color: #800080;" class="cye-lm-tag">24</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0xff</span><span style="color: #000000;" class="cye-lm-tag">] ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">&nbsp;</p>
+     <p class="cye-lm-tag">当然也可以搞一个16bit的表，或者更极端一点32bit的表，速度将会更快。</p>
+     <h1>平行算法</h1>
+     <p class="cye-lm-tag">网上都这么叫，我也这么叫吧，不过话说回来，的确有平行的意味在里面，先看代码，稍后解释</p>
+     <div class="cnblogs_code">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre><span style="color: #0000ff;" class="cye-lm-tag">int</span> BitCount4(unsigned <span style="color: #0000ff;" class="cye-lm-tag">int</span><span style="color: #000000;" class="cye-lm-tag"> n)
+{
+    n </span>= (n &amp;<span style="color: #800080;" class="cye-lm-tag">0x55555555</span>) + ((n &gt;&gt;<span style="color: #800080;" class="cye-lm-tag">1</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0x55555555</span><span style="color: #000000;" class="cye-lm-tag">) ;
+    n </span>= (n &amp;<span style="color: #800080;" class="cye-lm-tag">0x33333333</span>) + ((n &gt;&gt;<span style="color: #800080;" class="cye-lm-tag">2</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0x33333333</span><span style="color: #000000;" class="cye-lm-tag">) ;
+    n </span>= (n &amp;<span style="color: #800080;" class="cye-lm-tag">0x0f0f0f0f</span>) + ((n &gt;&gt;<span style="color: #800080;" class="cye-lm-tag">4</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0x0f0f0f0f</span><span style="color: #000000;" class="cye-lm-tag">) ;
+    n </span>= (n &amp;<span style="color: #800080;" class="cye-lm-tag">0x00ff00ff</span>) + ((n &gt;&gt;<span style="color: #800080;" class="cye-lm-tag">8</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0x00ff00ff</span><span style="color: #000000;" class="cye-lm-tag">) ;
+    n </span>= (n &amp;<span style="color: #800080;" class="cye-lm-tag">0x0000ffff</span>) + ((n &gt;&gt;<span style="color: #800080;" class="cye-lm-tag">16</span>) &amp;<span style="color: #800080;" class="cye-lm-tag">0x0000ffff</span><span style="color: #000000;" class="cye-lm-tag">) ;
+
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span><span style="color: #000000;" class="cye-lm-tag"> n ;
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">速度不一定最快，但是想法绝对巧妙。 说一下其中奥妙，其实很简单，先将n写成二进制形式，然后相邻位相加，重复这个过程，直到只剩下一位。</p>
+     <p class="cye-lm-tag">以217（11011001）为例，有图有真相，下面的图足以说明一切了。217的二进制表示中有5个1</p>
+     <p class="cye-lm-tag"><img src="http://pic002.cnblogs.com/img/zdd/201006/2010060623161414.jpg" alt="" /></p>
+     <h1>完美法</h1>
+     <div class="cnblogs_code">
+      <div>
+       <!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />-->
+       <span style="color: #0000ff;" class="cye-lm-tag">int</span>
+       <span style="color: #000000;" class="cye-lm-tag"> BitCount5(unsigned </span>
+       <span style="color: #0000ff;" class="cye-lm-tag">int</span>
+       <span style="color: #000000;" class="cye-lm-tag"> n) <br />{</span>
+       <span style="color: #000000;" class="cye-lm-tag"><br />&nbsp; &nbsp; unsigned <span style="color: #0000ff;" class="cye-lm-tag">int&nbsp;</span>tmp </span>
+       <span style="color: #000000;" class="cye-lm-tag">=</span>
+       <span style="color: #000000;" class="cye-lm-tag"> n </span>
+       <span style="color: #000000;" class="cye-lm-tag">-</span>
+       <span style="color: #000000;" class="cye-lm-tag"> ((n </span>
+       <span style="color: #000000;" class="cye-lm-tag">&gt;&gt;</span>
+       <span style="color: #800080;" class="cye-lm-tag">1</span>
+       <span style="color: #000000;" class="cye-lm-tag">) </span>
+       <span style="color: #000000;" class="cye-lm-tag">&amp;</span>
+       <span style="color: #800080;" class="cye-lm-tag">033333333333</span>
+       <span style="color: #000000;" class="cye-lm-tag">) </span>
+       <span style="color: #000000;" class="cye-lm-tag">-</span>
+       <span style="color: #000000;" class="cye-lm-tag"> ((n </span>
+       <span style="color: #000000;" class="cye-lm-tag">&gt;&gt;</span>
+       <span style="color: #800080;" class="cye-lm-tag">2</span>
+       <span style="color: #000000;" class="cye-lm-tag">) </span>
+       <span style="color: #000000;" class="cye-lm-tag">&amp;</span>
+       <span style="color: #800080;" class="cye-lm-tag">011111111111</span>
+       <span style="color: #000000;" class="cye-lm-tag">);<br /> </span>
+       <span style="color: #0000ff;" class="cye-lm-tag">&nbsp; &nbsp; return</span>
+       <span style="color: #000000;" class="cye-lm-tag"> ((tmp </span>
+       <span style="color: #000000;" class="cye-lm-tag">+</span>
+       <span style="color: #000000;" class="cye-lm-tag"> (tmp </span>
+       <span style="color: #000000;" class="cye-lm-tag">&gt;&gt;</span>
+       <span style="color: #800080;" class="cye-lm-tag">3</span>
+       <span style="color: #000000;" class="cye-lm-tag">)) </span>
+       <span style="color: #000000;" class="cye-lm-tag">&amp;</span>
+       <span style="color: #800080;" class="cye-lm-tag">030707070707</span>
+       <span style="color: #000000;" class="cye-lm-tag">) </span>
+       <span style="color: #000000;" class="cye-lm-tag">%</span>
+       <span style="color: #800080;" class="cye-lm-tag">63</span>
+       <span style="color: #000000;" class="cye-lm-tag">;<br />}</span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">最喜欢这个，代码太简洁啦，只是有个取模运算，可能速度上慢一些。区区两行代码，就能计算出1的个数，到底有何奥妙呢？为了解释的清楚一点，我尽量多说几句。</p>
+     <p class="cye-lm-tag">第一行代码的作用</p>
+     <p class="cye-lm-tag"><em>先说明一点，以0开头的是8进制数，以0x开头的是十六进制数，上面代码中使用了三个8进制数。</em></p>
+     <p class="cye-lm-tag">将n的二进制表示写出来，然后每3bit分成一组，求出每一组中1的个数，再表示成二进制的形式。比如n = 50，其二进制表示为110010，分组后是110和010，这两组中1的个数本别是2和3。2对应010，3对应011，所以第一行代码结束后，tmp = 010011，具体是怎么实现的呢？由于每组3bit，所以这3bit对应的十进制数都能表示为2^2 * a + 2^1&nbsp;* b + c的形式，也就是4a + 2b + c的形式，这里a,b,c的值为0或1，如果为0表示对应的二进制位上是0，如果为1表示对应的二进制位上是1，所以a + b + c的值也就是4a + 2b + c的二进制数中1的个数了。举个例子，十进制数6（0110）= 4 * 1 + 2 * 1 + 0，这里a = 1, b = 1, c = 0, a + b + c = 2，所以6的二进制表示中有两个1。现在的问题是，如何得到a + b + c呢？注意位运算中，右移一位相当于除2，就利用这个性质！</p>
+     <p class="cye-lm-tag">4a + 2b + c 右移一位等于2a + b</p>
+     <p class="cye-lm-tag">4a + 2b + c 右移量位等于a</p>
+     <p class="cye-lm-tag">然后做减法</p>
+     <p class="cye-lm-tag">4a + 2b + c&nbsp;–(2a + b)&nbsp;– a = a + b + c，这就是第一行代码所作的事，明白了吧。</p>
+     <p class="cye-lm-tag">第二行代码的作用</p>
+     <p class="cye-lm-tag">在第一行的基础上，将tmp中相邻的两组中1的个数累加，由于累加到过程中有些组被重复加了一次，所以要舍弃这些多加的部分，这就是&amp;030707070707的作用，又由于最终结果可能大于63，所以要取模。</p>
+     <p class="cye-lm-tag">需要注意的是，经过第一行代码后，从右侧起，每相邻的3bit只有四种可能，即000, 001, 010, 011，为啥呢？因为每3bit中1的个数最多为3。所以下面的加法中不存在进位的问题，因为3 + 3 = 6，不足8，不会产生进位。</p>
+     <p class="cye-lm-tag">tmp + (tmp &gt;&gt; 3)-这句就是是相邻组相加，注意会产生重复相加的部分，比如tmp = 659&nbsp;= 001 010 010 011时，tmp &gt;&gt; 3 = 000 001 010 010，相加得</p>
+     <p class="cye-lm-tag"><span style="color: #ff0000;" class="cye-lm-tag">001</span> <span style="color: #339966;" class="cye-lm-tag">0</span><span style="color: #339966;" class="cye-lm-tag">10</span> <span style="color: #ff0000;" class="cye-lm-tag">0</span><span style="color: #ff0000;" class="cye-lm-tag">10</span> <span style="color: #008000;" class="cye-lm-tag">011</span></p>
+     <p class="cye-lm-tag"><span style="color: #ff0000;" class="cye-lm-tag">000</span> <span style="color: #339966;" class="cye-lm-tag">0</span><span style="color: #339966;" class="cye-lm-tag">01</span> <span style="color: #ff0000;" class="cye-lm-tag">0</span><span style="color: #ff0000;" class="cye-lm-tag">10</span> <span style="color: #339966;" class="cye-lm-tag">0</span><span style="color: #339966;" class="cye-lm-tag">10</span></p>
+     <p class="cye-lm-tag">---------------------</p>
+     <p class="cye-lm-tag"><span style="color: #ff0000;" class="cye-lm-tag">001</span>&nbsp;<span style="color: #339966;" class="cye-lm-tag">011</span>&nbsp;<span style="color: #ff0000;" class="cye-lm-tag">1</span><span style="color: #ff0000;" class="cye-lm-tag">00</span> <span style="color: #339966;" class="cye-lm-tag">101</span></p>
+     <p class="cye-lm-tag"><span style="color: #000000;" class="cye-lm-tag">011 + 101 = 3 + 5 = 8。（感谢网友<a id="a_comment_author_2751852" href="http://home.cnblogs.com/u/151199/" target="_blank">Di哈</a>指正。）注意，659只是个中间变量，这个结果不代表659这个数的二进制形式中有8个1。</span></p>
+     <p class="cye-lm-tag">注意我们想要的只是第二组和最后一组（绿色部分），而第一组和第三组（红色部分）属于重复相加的部分，要消除掉，这就是&amp;030707070707所完成的任务（每隔三位删除三位），最后为什么还要%63呢？因为上面相当于每次计算相连的6bit中1的个数，最多是111111 = 77（八进制）= 63（十进制），所以最后要对63取模。</p>
+     <h1>位标志法</h1>
+     <p class="cye-lm-tag">感谢网友&nbsp;<a id="Comments1_CommentList_ctl05_NameLink" href="http://www.cnblogs.com/gussing/" target="_blank">gussing</a>提供</p>
+     <div class="cnblogs_code cye-lm-tag">
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+      <pre class="cye-lm-tag"><span style="color: #0000ff;" class="cye-lm-tag">struct</span><span style="color: #000000;" class="cye-lm-tag"> _byte
+{
+    unsigned a:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned b:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned c:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned d:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned e:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned f:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned g:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+    unsigned h:</span><span style="color: #800080;" class="cye-lm-tag">1</span><span style="color: #000000;" class="cye-lm-tag">;
+};
+
+</span><span style="color: #0000ff;" class="cye-lm-tag">long</span> get_bit_count( unsigned <span style="color: #0000ff;" class="cye-lm-tag">char</span><span style="color: #000000;" class="cye-lm-tag"> b )
+{
+    </span><span style="color: #0000ff;" class="cye-lm-tag">struct</span> _byte *by = (<span style="color: #0000ff;" class="cye-lm-tag">struct</span> _byte*)&amp;<span style="color: #000000;" class="cye-lm-tag">b;
+    </span><span style="color: #0000ff;" class="cye-lm-tag">return</span> (by-&gt;a+by-&gt;b+by-&gt;c+by-&gt;d+by-&gt;e+by-&gt;f+by-&gt;g+by-&gt;<span style="color: #000000;" class="cye-lm-tag">h);
+}</span></pre>
+      <div class="cnblogs_code_toolbar">
+       <span class="cnblogs_code_copy cye-lm-tag"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="//common.cnblogs.com/images/copycode.gif" alt="复制代码" /></a></span>
+      </div>
+     </div>
+     <h1>指令法</h1>
+     <p class="cye-lm-tag">感谢网友&nbsp;<a id="Comments1_CommentList_ctl06_NameLink" href="http://www.cnblogs.com/miloyip/" target="_blank">Milo Yip</a>提供</p>
+     <p class="cye-lm-tag">使用微软提供的指令，首先要确保你的CPU支持SSE4指令，用Everest和CPU-Z可以查看是否支持。</p>
+     <div class="cnblogs_code">
+      <div>
+       <!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />-->
+       <span style="color: #000000;" class="cye-lm-tag">unsigned </span>
+       <span style="color: #0000ff;" class="cye-lm-tag">int</span>
+       <span style="color: #000000;" class="cye-lm-tag"> n </span>
+       <span style="color: #000000;" class="cye-lm-tag">=</span>
+       <span style="color: #800080;" class="cye-lm-tag">127</span>
+       <span style="color: #000000;" class="cye-lm-tag"> ;<br />unsigned </span>
+       <span style="color: #0000ff;" class="cye-lm-tag">int</span>
+       <span style="color: #000000;" class="cye-lm-tag"> bitCount </span>
+       <span style="color: #000000;" class="cye-lm-tag">=</span>
+       <span style="color: #000000;" class="cye-lm-tag"> _mm_popcnt_u32(n) ;</span>
+      </div>
+     </div>
+     <p class="cye-lm-tag">References</p>
+     <p class="cye-lm-tag"><a href="http://gurmeetsingh.wordpress.com/2008/08/05/fast-bit-counting-routines/">http://gurmeetsingh.wordpress.com/2008/08/05/fast-bit-counting-routines/</a></p>
+    </div>
+    <div id="MySignature" style="display: block;">
+     <div id="ZddSignature">
+      <div>
+       作者：
+       <a href="http://www.cnblogs.com/graphics/" target="_blank">zdd</a>
+      </div>
+      <div>
+       出处：
+       <a href="http://www.cnblogs.com/graphics/" target="_blank">http://www.cnblogs.com/graphics/</a>
+       <div>
+        <div>
+         本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="clear"></div>
+   </div>
+  </div>
+ </body>
+</html>
